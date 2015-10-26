@@ -51,6 +51,8 @@ static constexpr double kDefaultAdisAccelerometerBiasCorrelationTime =
     300.0;
 static constexpr double kDefaultAdisAccelerometerTurnOnBiasSigma =
     20.0e-3 * 9.8;
+static const math::Vector3 kDefaultAdisAccelerometerTurnOnBiasMean = math::Vector3(0,0,0);
+
 // Earth's gravity in Zurich (lat=+47.3667degN, lon=+8.5500degE, h=+500m, WGS84)
 static constexpr double kDefaultGravityMagnitude = 9.8068;
 
@@ -76,6 +78,8 @@ struct ImuParameters {
   double accelerometer_bias_correlation_time;
   /// Accelerometer turn on bias standard deviation [m/s^2]
   double accelerometer_turn_on_bias_sigma;
+  /// Accelerometer turn on bias mean [m/s^2]
+  math::Vector3 accelerometer_turn_on_bias_mean;
   /// Norm of the gravitational acceleration [m/s^2]
   double gravity_magnitude;
 
@@ -91,6 +95,8 @@ struct ImuParameters {
             kDefaultAdisAccelerometerBiasCorrelationTime),
         accelerometer_turn_on_bias_sigma(
             kDefaultAdisAccelerometerTurnOnBiasSigma),
+        accelerometer_turn_on_bias_mean(
+            kDefaultAdisAccelerometerTurnOnBiasMean),
         gravity_magnitude(kDefaultGravityMagnitude) {}
 };
 

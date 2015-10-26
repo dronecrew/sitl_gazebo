@@ -93,6 +93,9 @@ void GazeboImuPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
   getSdfParam<double>(_sdf, "accelerometerTurnOnBiasSigma",
                       imu_parameters_.accelerometer_turn_on_bias_sigma,
                       imu_parameters_.accelerometer_turn_on_bias_sigma);
+  getSdfParam<math::Vector3>(_sdf, "accelerometerTurnOnBiasMean",
+                      imu_parameters_.accelerometer_turn_on_bias_mean,
+                      imu_parameters_.accelerometer_turn_on_bias_mean);
 
   last_time_ = world_->GetSimTime();
 
@@ -168,11 +171,12 @@ void GazeboImuPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
 
   double sigma_bon_g = imu_parameters_.gyroscope_turn_on_bias_sigma;
   double sigma_bon_a = imu_parameters_.accelerometer_turn_on_bias_sigma;
+  math::Vector3 mean_bon_a = imu_parameters_.accelerometer_turn_on_bias_mean;
   for (int i = 0; i < 3; ++i) {
       gyroscope_turn_on_bias_[i] =
           sigma_bon_g * standard_normal_distribution_(random_generator_);
       accelerometer_turn_on_bias_[i] =
-          sigma_bon_a * standard_normal_distribution_(random_generator_);
+          sigma_bon_a * standard_normal_distribution_(random_generator_) + mean_bon_a[i];
   }
 
   // TODO(nikolicj) incorporate steady-state covariance of bias process
