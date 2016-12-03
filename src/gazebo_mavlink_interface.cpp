@@ -636,6 +636,10 @@ void GazeboMavlinkInterface::ImuCallback(ImuPtr& imu_message) {
   //gzerr << "got pose: " << T_W_I.rot << "\n";
   float declination = get_mag_declination(lat_rad, lon_rad);
 
+  // local magnetic field model
+  float mag_decl_bias = 18.0f - 2.4f*z - 0.03f*z*z + 11.0f*x - 4.2f*x*z + 0.33f*x*z*z - 0.63*x*x + 0.21*x*x*z;
+  declination += mag_decl_bias;
+
   math::Quaternion q_dn(0.0, 0.0, declination);
   math::Vector3 mag_n = q_dn.RotateVectorReverse(mag_d_);
 
