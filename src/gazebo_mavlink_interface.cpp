@@ -637,9 +637,9 @@ void GazeboMavlinkInterface::ImuCallback(ImuPtr& imu_message) {
   float declination = get_mag_declination(lat_rad, lon_rad);
 
   // local magnetic field model
-  float x = _pos_g.x;
-  float y = _pos_g.y;
-  float z = _pos_g.z;
+  float x = pos_g.x;
+  float y = pos_g.y;
+  float z = pos_g.z;
   float mag_decl_bias = 18.0f - 2.4f*z - 0.03f*z*z + 11.0f*x - 4.2f*x*z + 0.33f*x*z*z - 0.63*x*x + 0.21*x*x*z;
   declination += mag_decl_bias;
 
